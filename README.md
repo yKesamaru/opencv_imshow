@@ -1,5 +1,3 @@
-UbuntuのPython仮想環境venvでcv2.imshowが表示されない件（エラーログも表示されない）
-
 # はじめに
 UbuntuのPython仮想環境venvでcv2.imshowが表示されない件（エラーログも表示されない）について調べたので、そのメモです。
 （タイトルは参考URLと同じにさせて頂きました。というのも、cv2.imshow関連で検索した場合、大抵`cv2.waitKey()`を書き忘れてる件ばかりがヒットするからです。このタイトルが一番しっくりきました。）
@@ -14,13 +12,13 @@ https://www.hiro877.com/entry/opencv-not-function-imshow
 
 PySimpleGUIは非常に使い勝手が良いのですが、処理が重くなるのが難点です。
 
-![](image823.png)
+![](https://raw.githubusercontent.com/yKesamaru/opencv_imshow/master/image823.png)
 
 この図はSSD（Single Shot Multibox Detector）を実装し、`snakeviz`で可視化したときのものです。
-全体の処理のうち、$ \frac{3}{4} $程がPySimpleGUIの処理に費やされています。
+全体の処理のうち、$\frac{3}{4}$程がPySimpleGUIの処理に費やされています。
 処理を軽くしようと努力してるのに、PySimpleGUIのせいで処理が重くなっているのは悲しいです。
 
-![](2023-08-14-19-25-29.png)
+![](https://raw.githubusercontent.com/yKesamaru/opencv_imshow/master/2023-08-14-19-25-29.png)
 
 ということで重い腰を上げ、cv2.imshowが表示されない問題を解決することにしました。
 
@@ -43,7 +41,7 @@ Graphics:  Device-1: NVIDIA TU116 [GeForce GTX 1660 Ti] vendor: Micro-Star MSI d
 
 # 結論
 - Python仮想環境から、opencv-pythonをアンインストール
-- synapticにて、python3-opencvをインストール
+- aptにて、python3-opencvをインストール
 - openCVのライブラリパスを取得し、sys.pathに追加
 
 それぞれの手順を説明します。
@@ -51,7 +49,7 @@ Graphics:  Device-1: NVIDIA TU116 [GeForce GTX 1660 Ti] vendor: Micro-Star MSI d
 ```bash
 $ pip uninstall opencv-python
 ```
-2. synapticにて、python3-opencvをインストール
+2. aptにて、python3-opencvをインストール
 ```bash
 $ sudo apt install python3-opencv
 ```
@@ -75,7 +73,7 @@ $ sudo apt install python3-opencv
    ```
 
 参考URLには「opencvのソースコードを取得してビルドする」という過程がありますが、その必要はありませんでした。
-![](ssd_pytorch.gif)
+![](https://raw.githubusercontent.com/yKesamaru/opencv_imshow/master/ssd_pytorch.gif)
 
 cv2.imshow()を使用する場合には、上記のようにsys.pathに追加すればよいようです。
 
